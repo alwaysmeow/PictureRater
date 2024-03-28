@@ -7,8 +7,8 @@ filenames = os.listdir('static')
 
 data = []
 
-for filename in filenames:
-    data.append((filename, -1))
+for i in range(len(filenames)):
+    data.append((f"{i}.jpeg", -1))
 
 with open("markup.csv", 'w', newline='') as csvfile:
     csvwriter = csv.writer(csvfile)

@@ -50,19 +50,26 @@
     </style>
 </head>
 <body>
-    <div id="container">
+    <form onsubmit="send(event)" id="container">
         <img src="/static/{{ id }}.jpeg" alt="Image" />
         <input id="mark" type="text" placeholder="Enter Mark" />
-        <button onclick="send()">Send</button>
-    </div>
+        <button onclick="send(event)">Send</button>
+    </form>
 
     <script>
-        function send() {
+        function send(event) {
+            event.preventDefault()
+
             const id = Number(window.location.href.split('/').pop());
+            let value = document.getElementById("mark").value
+            if (value === "")
+                value = -2
+            else
+                value -= 1
 
             const postdata = {
                 id: id,
-                mark: document.getElementById("mark").value - 1,
+                mark: value,
             }
 
             const request = {
@@ -80,6 +87,8 @@
             })
             .catch(error => console.error('Error:', error));
         }
+
+        document.getElementById("mark").focus()
     </script>
 </body>
 </html>
