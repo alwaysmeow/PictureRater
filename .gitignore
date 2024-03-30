@@ -1,5 +1,6 @@
 markup.csv
-static/
-static.zip
+static
+models
 **/.DS_Store
 **/__pycache__
+**.zip
