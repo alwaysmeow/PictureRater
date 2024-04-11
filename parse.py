@@ -12,20 +12,24 @@ path = "kinopoisk"
 blocked = False
 
 def parse(id):
+    global blocked
     response = requests.get(f"https://www.kinopoisk.ru/name/{id}/", headers=headers)
     print(f"id = {id}: status = {response.status_code}")
-    if response.status_code != 200:
+    if response.status_code == 404:
+        print(f"Page not found\n")
+        return
+    if response.status_code != 200 and response.status_code != 404:
         blocked = True
         print(f"You're blocked by website. Ending.\n")
     else:
         soup = BeautifulSoup(response.text, "lxml")
 
-        tag = soup.select_one("#__next script")
-        data = json.loads(tag.text)
         try:
+            tag = soup.select_one("#__next script")
+            data = json.loads(tag.text)
             gender = data["gender"].split('/')[-1]
         except:
-            print("Can't get gender\n")
+            print("Can't parse data\n")
             return
         if gender == "Female":
             img = soup.select_one("body img.image")
@@ -40,11 +44,11 @@ def parse(id):
         else:
             print("Gender is not female\n")
 
-start = 104
-end = 4000
+start = 12000
+end = 12001
 
 for i in range(start, end):
     if blocked:
         break
     parse(i)
-    sleep(0.5)
+    sleep(0.2)

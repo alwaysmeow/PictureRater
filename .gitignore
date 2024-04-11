@@ -1,7 +1,8 @@
-markup.csv
+**.csv
 static
 models
 kinopoisk
 **/.DS_Store
 **/__pycache__
 **.zip
+note.txt
